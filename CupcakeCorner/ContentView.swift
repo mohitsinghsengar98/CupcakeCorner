@@ -10,7 +10,14 @@ import SwiftUI
 struct ContentView: View {
     
     var body: some View {
-        AsyncImage(url:URL(string:"https://hws.dev/img/logo.png"), scale:3)
+        AsyncImage(url: URL(string:"https://hws.dev/img/logo.png")){ image in
+            image
+                .resizable()
+                .scaledToFit()
+        }placeholder:{
+            ProgressView()
+        }
+        .frame(width:200,height:200)
     }
 }
 
