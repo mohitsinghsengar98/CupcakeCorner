@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+// Now start creating the project.
 struct ContentView: View {
     var body: some View {
         VStack {
