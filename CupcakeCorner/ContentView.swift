@@ -9,14 +9,39 @@ import SwiftUI
 
 // Now start creating the project.
 struct ContentView: View {
+    @State private var order = Order()
+    
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        NavigationStack{
+            Form{
+                Section{
+                    Picker("Select your cake type", selection: $order.type){
+                        ForEach(Order.types.indices){
+                            Text(Order.types[$0])
+                        }
+                    }
+                    
+                    Stepper("No of cake: \(order.quantity)", value: $order.quantity, in: 3...20)
+                }
+                
+                Section{
+                    Toggle("Add special requests?", isOn:$order.specialRequestEnabled.animation())
+                    
+                    if(order.specialRequestEnabled){
+                        Toggle("Add extra frosting", isOn:$order.extraFrosting.animation())
+                        
+                        Toggle("Add extra sprinkles", isOn: $order.addSprinkles.animation())
+                    }
+                }
+                
+                Section{
+                    NavigationLink("Delivery Details"){
+                        AddressView(order: order)
+                    }
+                }
+            }.navigationTitle("Cupcake Corner")
+                .navigationBarTitleDisplayMode(.inline)
         }
-        .padding()
     }
 }
 
